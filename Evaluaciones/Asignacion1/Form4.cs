@@ -4,70 +4,171 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
-namespace Asignacion1
+namespace Practica
 {
     public partial class Form4 : Form
     {
-        MDI mdi = new MDI();
         public Form4()
         {
             InitializeComponent();
         }
 
-       
-        private void txtPassword_TextChanged(object sender, EventArgs e)
+        double sub, des, total, imp;
+
+        private void button3_Click(object sender, EventArgs e)
         {
-            // Set the maximum length of text in the control to eight.
-            txtPassword.MaxLength = 8;
-            // Assign the asterisk to be the password character.
-            txtPassword.PasswordChar = '*';
+            Application.Exit();
         }
 
-        private void btnAceptar_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
-             string user1 = "Kelly Martinez";
-             string contr1 = "12345678";
+            textBox1.Clear();
+            textBox2.Clear();
+            textBox3.Clear();
+            maskedTextBox1.Clear();
+        }
 
-            user1 = txtUsuario.Text;
-            contr1 = txtPassword.Text;
-
-            if (txtUsuario.Text == "Kelly Martinez" && txtPassword.Text == "12345678")
+        private void button1_Click(object sender, EventArgs e)
+        {
+            double sub, des, total, imp;
+            sub = Convert.ToDouble(maskedTextBox1.Text);
+            if (treeView1.SelectedNode.Text.Equals("Contado"))
             {
-                progressBar1.Minimum = 0;
-                progressBar1.Maximum = 100;
 
-                for (int i= 0; i < 100; i++)
+                if (sub >= 100 && sub <= 1000)
                 {
-                    progressBar1.Value = i;
-                }
+                    if (checkBox1.Checked == true)
+                    {
+                        des = sub * 0.05;
+                        textBox1.Text = des.ToString();
+                        total = sub - des;
+                        textBox3.Text = total.ToString();
+                    }
+                    else
+                    {
+                        if (checkBox1.Checked == false)
+                        {
+                            textBox1.Text = "";
+                            imp = sub * 0.15;
+                            textBox2.Text = imp.ToString();
+                            total = sub * 1.15;
+                            textBox3.Text = total.ToString();
+                        }
 
-                mdi.Show();
-            }
-            //else if (user1 =="" && contr1 == "")
-            //{
-            //    MessageBox.Show("Rellene los campos");
-            //}
-            else if (user1 != "Kelly Martinez" && contr1 != "12345678")
-            {
-                MessageBox.Show("Rellene los campos correctamente" , "Advertencia");
-                txtUsuario.Clear();
-                txtPassword.Clear();
-                txtUsuario.Focus();
+                    }
+                }
+                else
+                {
+                    if (sub > 100 && sub <= 3000)
+                    {
+                        if (checkBox1.Checked == true)
+                        {
+
+                            des = sub * 0.10;
+                            textBox1.Text = des.ToString();
+                            total = sub - des;
+                            textBox3.Text = total.ToString();
+                        }
+                        else
+                        {
+                            if (checkBox1.Checked == false)
+                            {
+                                textBox1.Text = "";
+                                imp = sub * 0.10;
+                                textBox2.Text = imp.ToString();
+                                total = sub * 1.10;
+                                textBox3.Text = total.ToString();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (sub >= 3001)
+                        {
+                            if (checkBox1.Checked == true)
+                            {
+                                des = sub * 0.12;
+                                textBox1.Text = des.ToString();
+                                total = sub - des;
+                                textBox2.Text = total.ToString();
+                            }
+                            else
+                            {
+                                if (checkBox1.Checked == false)
+                                {
+                                    textBox1.Text = "";
+                                    textBox1.Enabled = false;
+                                    imp = sub * 1.15;
+
+                                    textBox2.Text = imp.ToString();
+                                }
+                            }
+                        }
+                    }
+
+                }
             }
             else
             {
-                MessageBox.Show("Rellene todos los campos");
-                txtUsuario.Focus();
+                if (treeView1.SelectedNode.Text.Equals("Credito"))
+                {
+                    checkBox1.Enabled = false;
+                    if (sub >= 100 && sub <= 1000)
+                    {
+                        if (checkBox1.Checked == true)
+                        {
+                            des = sub * 0.12;
+                            textBox1.Text = des.ToString();
+                            total = sub + des;
+                            textBox2.Text = total.ToString();
+                        }
+                    }
+
+                }
+                else
+                {
+                    if (sub >= 1001 && sub <= 3000)
+                    {
+                        if (checkBox1.Checked == true)
+                        {
+
+                            des = sub * 0.10;
+                            textBox1.Text = des.ToString();
+                            total = sub + des;
+                            textBox2.Text = total.ToString();
+                        }
+
+                    }
+                    else
+                    {
+                        if (sub >= 3001)
+                        {
+                            if (checkBox1.Checked == true)
+                            {
+                                des = sub * 0.05;
+                                textBox1.Text = des.ToString();
+                                total = sub + des;
+                                textBox2.Text = total.ToString();
+                            }
+
+                        }
+                    }
+
+                }
             }
+
         }
 
-        private void btnCalncel_Click(object sender, EventArgs e)
+        private void btnCalc_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+
         }
     }
 }
